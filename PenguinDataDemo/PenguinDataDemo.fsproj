@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net9.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="src\DataLoad.fs" />
+    <Compile Include="src\DataClean.fs" />
+    <Compile Include="src\Visualization.fs" />
+    <Compile Include="Program.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Deedle" Version="3.0.0" />
+    <PackageReference Include="FSharp.Data" Version="6.6.0" />
+    <PackageReference Include="Plotly.NET" Version="5.1.0" />
+    <PackageReference Include="Plotly.NET.Interactive" Version="5.0.0" />
+  </ItemGroup>
+
+</Project>
