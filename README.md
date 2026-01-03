@@ -1,124 +1,209 @@
-# Penguin Data Analysis with F#
+# F# Applications in Data Science
 
-A data analysis and visualization project in F# that explores penguin morphological measurements. This project demonstrates data loading, cleaning, and visualization using F# functional programming paradigms.
+<p align="center">
+  <img src="https://fsharp.org/img/logo/fsharp.svg" alt="F# Logo" width="120"/>
+</p>
 
-## Overview
+A collection of projects demonstrating **functional programming approaches to data science** using F#. This repository showcases how F#'s expressive syntax, type safety, and functional paradigms make it an excellent choice for data analysis, transformation, and visualization workflows.
 
-This project analyzes penguin data from the Palmer Archipelago, performing data cleaning operations and generating various visualizations to explore relationships between different morphological features such as bill length, flipper length, and body mass.
+## Why F# for Data Science?
 
-## Features
+F# brings unique advantages to data science that complement traditional tools like Python and R:
 
-- **Data Loading**: Loads penguin data from CSV files using Deedle data frames
-- **Data Cleaning**: 
-  - Removes rows with excessive missing values
-  - Handles missing categorical data
-  - Validates data ranges to remove outliers
-  - Creates derived features (e.g., bill area)
-- **Visualization**: Generates interactive plots using Plotly.NET:
-  - Scatter plot: Flipper Length vs Body Mass
-  - Box plot: Bill Length Distribution
-  - Histogram: Body Mass Distribution
-  - Scatter plot: Bill Area vs Body Mass
+| Feature | Benefit |
+|---------|---------|
+| **Type Inference** | Catch data type errors at compile time, not runtime |
+| **Pipeline Operators** | Chain transformations naturally with `\|>` |
+| **Immutability by Default** | Safer data transformations without side effects |
+| **Pattern Matching** | Elegant handling of missing data and edge cases |
+| **REPL Support** | Interactive exploration via F# Interactive (FSI) |
+| **.NET Ecosystem** | Access to mature libraries and enterprise integration |
 
-## Project Structure
+---
 
+## Projects
+
+### 🐧 Penguin Data Analysis
+
+A complete data analysis pipeline exploring morphological measurements of penguins from the Palmer Archipelago. This project demonstrates the full data science workflow in F#.
+
+**What it demonstrates:**
+- Loading and exploring CSV datasets
+- Data cleaning and preprocessing
+- Handling missing values functionally
+- Outlier detection and removal
+- Feature engineering
+- Interactive data visualization
+
+[→ View Project Details](./PenguinDataDemo/README.md)
+
+---
+
+## Core Concepts Demonstrated
+
+### 1. Data Loading with Deedle
+
+[Deedle](https://fslab.org/Deedle/) is F#'s answer to pandas—a powerful data frame library for structured data manipulation.
+
+```fsharp
+open Deedle
+
+// Load CSV into a typed data frame
+let df = Frame.ReadCsv("penguins.csv", hasHeaders = true)
+printfn "Rows: %d, Columns: %d" df.RowCount df.ColumnCount
 ```
-PenguinDataDemo/
-├── src/
-│   ├── DataLoad.fs      # Data loading module
-│   ├── DataClean.fs     # Data cleaning and preprocessing
-│   └── Visualization.fs # Plotting and visualization functions
-├── Program.fs            # Main entry point
-├── penguins.csv         # Dataset file
-└── PenguinDataDemo.fsproj # Project file
+
+### 2. Functional Data Transformation
+
+F#'s pipeline operator (`|>`) enables readable, chainable data transformations:
+
+```fsharp
+let cleanedData = 
+    rawData
+    |> Frame.filterRows (fun _ row -> hasValidMeasurements row)
+    |> Frame.mapCols (fun name col -> handleMissingValues name col)
+    |> Frame.filterRows (fun _ row -> isWithinValidRange row)
 ```
 
-## Prerequisites
+### 3. Safe Missing Value Handling
+
+Pattern matching and `OptionalValue<T>` provide compile-time safe handling of missing data:
+
+```fsharp
+let billLength = row.TryGetAs<float>("bill_length_mm")
+let billDepth = row.TryGetAs<float>("bill_depth_mm")
+
+// Count valid measurements using functional composition
+let validCount = 
+    [billLength.HasValue; billDepth.HasValue; flipperLength.HasValue; bodyMass.HasValue]
+    |> List.filter id
+    |> List.length
+```
+
+### 4. Interactive Visualization with Plotly.NET
+
+[Plotly.NET](https://plotly.net/) brings interactive, publication-quality visualizations to F#:
+
+```fsharp
+open Plotly.NET
+
+Chart.Scatter(x = flipperData, y = massData, mode = StyleParam.Mode.Markers)
+|> Chart.withTitle "Flipper Length vs Body Mass"
+|> Chart.show
+```
+
+### 5. Feature Engineering
+
+Create derived features using Deedle's expressive column operations:
+
+```fsharp
+// Create bill area as a derived feature
+let billAreaSeries = df?bill_length_mm * df?bill_depth_mm
+df.AddColumn("bill_area_mm2", billAreaSeries)
+```
+
+---
+
+## Getting Started
+
+### Prerequisites
 
 - [.NET 9.0 SDK](https://dotnet.microsoft.com/download) or later
 - F# compiler (included with .NET SDK)
 
-## Dependencies
+### Quick Start
 
-The project uses the following NuGet packages:
-
-- **Deedle** (3.0.0) - Data frame library for F#
-- **FSharp.Data** (6.6.0) - F# type providers for data access
-- **Plotly.NET** (5.1.0) - Interactive plotting library
-- **Plotly.NET.Interactive** (5.0.0) - Interactive visualization support
-
-## Installation
-
-1. Clone the repository:
 ```bash
+# Clone the repository
 git clone https://github.com/SiD-array/F-applications.git
-cd F-applications/PenguinDataDemo
-```
+cd F-applications
 
-2. Restore dependencies:
-```bash
+# Run the Penguin Data Analysis project
+cd PenguinDataDemo
 dotnet restore
-```
-
-3. Build the project:
-```bash
-dotnet build
-```
-
-## Usage
-
-Run the application:
-```bash
 dotnet run
 ```
 
-The program will:
-1. Load the penguin dataset from `penguins.csv`
-2. Clean and preprocess the data
-3. Generate and display four visualizations:
-   - Scatter plot of flipper length vs body mass
-   - Box plot of bill length distribution
-   - Histogram of body mass distribution
-   - Scatter plot of bill area vs body mass
+---
 
-## Data Cleaning Process
+## Project Structure
 
-The data cleaning module performs the following operations:
+```
+F-applications/
+├── PenguinDataDemo/              # Penguin data analysis project
+│   ├── src/
+│   │   ├── DataLoad.fs           # Data loading utilities
+│   │   ├── DataClean.fs          # Data cleaning & preprocessing
+│   │   └── Visualization.fs      # Plotting & visualization
+│   ├── Program.fs                # Main entry point
+│   ├── penguins.csv              # Palmer Penguins dataset
+│   └── PenguinDataDemo.fsproj    # Project configuration
+├── README.md                     # This file
+└── .gitignore
+```
 
-1. **Missing Value Handling**: Removes rows with fewer than 3 out of 4 key measurements (bill length, bill depth, flipper length, body mass)
-2. **Categorical Data Cleaning**: Replaces empty or null sex values with "Unknown"
-3. **Outlier Detection**: Filters out measurements outside reasonable ranges:
-   - Bill length: 30-60 mm
-   - Bill depth: 10-25 mm
-   - Flipper length: 170-240 mm
-   - Body mass: 2500-6500 g
-4. **Feature Engineering**: Creates derived features like bill area (bill length × bill depth)
+---
 
-## Dataset
+## Technology Stack
 
-The project uses a penguin dataset containing measurements of penguins from the Palmer Archipelago. The dataset includes:
+| Library | Version | Purpose |
+|---------|---------|---------|
+| **F#** | .NET 9.0 | Functional-first programming language |
+| **Deedle** | 3.0.0 | Data frames & series manipulation |
+| **FSharp.Data** | 6.6.0 | Type providers for data access |
+| **Plotly.NET** | 5.1.0 | Interactive visualizations |
+| **Plotly.NET.Interactive** | 5.0.0 | Notebook integration |
 
-- **Species**: Adelie, Chinstrap, Gentoo
-- **Island**: Torgersen, Biscoe, Dream
-- **Measurements**: Bill length, bill depth, flipper length, body mass
-- **Metadata**: Sex, year of observation
+---
 
-## Technologies
+## Learning Resources
 
-- **F#** - Functional-first programming language
-- **Deedle** - Data frame library for exploratory data analysis
-- **Plotly.NET** - Interactive data visualization
-- **.NET 9.0** - Runtime and framework
+### F# for Data Science
+- [FsLab](https://fslab.org/) - F# data science packages
+- [F# for Fun and Profit](https://fsharpforfunandprofit.com/) - Comprehensive F# tutorials
+- [Deedle Documentation](https://fslab.org/Deedle/) - Data frame operations
+
+### Visualization
+- [Plotly.NET Documentation](https://plotly.net/) - Chart types and customization
+- [XPlot](https://fslab.org/XPlot/) - Alternative plotting library
+
+---
+
+## Roadmap
+
+Future projects planned for this repository:
+
+- [ ] **Time Series Analysis** - Stock price prediction with ML.NET
+- [ ] **Statistical Analysis** - Hypothesis testing and regression
+- [ ] **Machine Learning** - Classification with ML.NET and F#
+- [ ] **Data Pipeline** - ETL workflows with type providers
+
+---
+
+## Contributing
+
+Contributions are welcome! Whether it's:
+- 🐛 Bug fixes
+- 📝 Documentation improvements
+- ✨ New data science examples
+- 🎨 Visualization enhancements
+
+Please feel free to submit a Pull Request.
+
+---
 
 ## License
 
 This project is open source and available for educational purposes.
 
+---
+
 ## Author
 
-SiD-array
+**SiD-array** - [GitHub Profile](https://github.com/SiD-array)
 
-## Contributing
+---
 
-Contributions are welcome! Please feel free to submit a Pull Request.
-
+<p align="center">
+  <i>Functional programming meets data science 📊</i>
+</p>
