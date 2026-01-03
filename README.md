@@ -4,7 +4,14 @@
   <img src="https://fsharp.org/img/logo/fsharp.svg" alt="F# Logo" width="120"/>
 </p>
 
+<p align="center">
+  <a href="https://f-applications.vercel.app/"><img src="https://img.shields.io/badge/🌐_Live_Demo-f--applications.vercel.app-06b6d4?style=for-the-badge" alt="Live Demo"/></a>
+  <a href="https://github.com/SiD-array/F-applications"><img src="https://img.shields.io/badge/GitHub-Repository-181717?style=for-the-badge&logo=github" alt="GitHub"/></a>
+</p>
+
 A collection of projects demonstrating **functional programming approaches to data science** using F#. This repository showcases how F#'s expressive syntax, type safety, and functional paradigms make it an excellent choice for data analysis, transformation, and visualization workflows.
+
+> **🔗 [View Live Demo →](https://f-applications.vercel.app/)** — Interactive website showcasing the project, visualizations, and code examples.
 
 ## Why F# for Data Science?
 
@@ -141,6 +148,11 @@ F-applications/
 │   ├── Program.fs                # Main entry point
 │   ├── penguins.csv              # Palmer Penguins dataset
 │   └── PenguinDataDemo.fsproj    # Project configuration
+├── docs/                         # Project showcase website
+│   ├── index.html                # Main webpage
+│   ├── style.css                 # Styling
+│   ├── script.js                 # Interactions
+│   └── plots/                    # Embedded visualizations
 ├── README.md                     # This file
 └── .gitignore
 ```

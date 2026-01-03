@@ -1,6 +1,10 @@
 # 🐧 Penguin Data Analysis
 
+[![Live Demo](https://img.shields.io/badge/🌐_Live_Demo-f--applications.vercel.app-06b6d4?style=flat-square)](https://f-applications.vercel.app/)
+
 A functional data analysis pipeline in F# exploring the Palmer Penguins dataset—demonstrating data loading, cleaning, transformation, and visualization using functional programming paradigms.
+
+> **[View Interactive Demo →](https://f-applications.vercel.app/#visualizations)** — See the visualizations and code examples live!
 
 ## Overview
 
