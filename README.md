@@ -89,7 +89,9 @@ open Plotly.NET
 
 Chart.Scatter(x = flipperData, y = massData, mode = StyleParam.Mode.Markers)
 |> Chart.withTitle "Flipper Length vs Body Mass"
-|> Chart.show
+|> Chart.withXAxisStyle "Flipper Length (mm)"
+|> Chart.withYAxisStyle "Body Mass (g)"
+|> Chart.saveHtml("plots/flipper_vs_mass.html")
 ```
 
 ### 5. Feature Engineering
@@ -135,6 +137,7 @@ F-applications/
 │   │   ├── DataLoad.fs           # Data loading utilities
 │   │   ├── DataClean.fs          # Data cleaning & preprocessing
 │   │   └── Visualization.fs      # Plotting & visualization
+│   ├── plots/                    # Generated HTML visualizations
 │   ├── Program.fs                # Main entry point
 │   ├── penguins.csv              # Palmer Penguins dataset
 │   └── PenguinDataDemo.fsproj    # Project configuration

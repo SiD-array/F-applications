@@ -84,12 +84,16 @@ Rows: 344, Columns: 9
 → Final cleaned dataset: 342 rows
 
  Creating scatter plot of Flipper Length vs Body Mass...
-→ Showing boxplot...
-→ Showing histogram...
-→ Showing bill area vs body mass scatter plot...
+   Saved: plots/flipper_vs_mass.html
+→ Creating bill length boxplot...
+   Saved: plots/bill_length_boxplot.html
+→ Creating body mass histogram...
+   Saved: plots/body_mass_histogram.html
+→ Creating bill area vs body mass scatter plot...
+   Saved: plots/bill_area_vs_mass.html
 ```
 
-Four browser windows will open with interactive Plotly charts.
+Interactive Plotly charts are saved to the `plots/` folder as HTML files.
 
 ## Code Highlights
 
@@ -129,6 +133,11 @@ PenguinDataDemo/
 │   ├── DataLoad.fs         # Data loading module
 │   ├── DataClean.fs        # Cleaning & preprocessing
 │   └── Visualization.fs    # Chart generation
+├── plots/                  # Generated visualizations
+│   ├── flipper_vs_mass.html
+│   ├── bill_length_boxplot.html
+│   ├── body_mass_histogram.html
+│   └── bill_area_vs_mass.html
 ├── Program.fs              # Entry point & orchestration
 ├── penguins.csv            # Dataset (344 rows)
 └── PenguinDataDemo.fsproj  # Project configuration
