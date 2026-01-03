@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>F# Data Science | Functional Analysis with Palmer Penguins</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <span class="brand-icon">λ</span>
+            <span class="brand-text">F# DataSci</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#about">About</a></li>
+            <li><a href="#pipeline">Pipeline</a></li>
+            <li><a href="#visualizations">Visualizations</a></li>
+            <li><a href="#code">Code</a></li>
+            <li><a href="https://github.com/SiD-array/F-applications" class="btn-github" target="_blank">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                GitHub
+            </a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero">
+        <div class="hero-bg">
+            <div class="grid-overlay"></div>
+            <div class="gradient-orb orb-1"></div>
+            <div class="gradient-orb orb-2"></div>
+            <div class="gradient-orb orb-3"></div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-badge">
+                <span class="badge-dot"></span>
+                Functional Programming × Data Science
+            </div>
+            <h1>
+                <span class="text-gradient">F# Applications</span>
+                <br>in Data Science
+            </h1>
+            <p class="hero-description">
+                Exploring the Palmer Penguins dataset through the lens of functional programming. 
+                Type-safe data pipelines, elegant transformations, and interactive visualizations.
+            </p>
+            <div class="hero-stats">
+                <div class="stat">
+                    <span class="stat-value">344</span>
+                    <span class="stat-label">Data Points</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-value">3</span>
+                    <span class="stat-label">Species</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-value">4</span>
+                    <span class="stat-label">Visualizations</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-value">100%</span>
+                    <span class="stat-label">F#</span>
+                </div>
+            </div>
+            <a href="#visualizations" class="btn-primary">
+                Explore Visualizations
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+            </a>
+        </div>
+        <div class="hero-visual">
+            <div class="code-window">
+                <div class="window-header">
+                    <div class="window-dots">
+                        <span></span><span></span><span></span>
+                    </div>
+                    <span class="window-title">Program.fs</span>
+                </div>
+                <pre class="code-content"><code><span class="keyword">open</span> PenguinData.DataLoad
+<span class="keyword">open</span> PenguinData.DataClean
+<span class="keyword">open</span> PenguinData.Visualization
+
+<span class="keyword">let</span> main argv =
+    <span class="keyword">let</span> raw = loadPenguins <span class="string">"penguins.csv"</span>
+    <span class="keyword">let</span> cleaned = cleanData raw
+
+    scatterFlipperVsMass cleaned
+    billLengthBoxplot cleaned
+    histBodyMass cleaned
+    scatterBillAreaVsMass cleaned
+    
+    <span class="number">0</span></code></pre>
+            </div>
+        </div>
+    </header>
+
+    <!-- About Section -->
+    <section id="about" class="section about">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Why F#?</span>
+                <h2>Functional Advantages for Data Science</h2>
+                <p>F# brings unique strengths that complement traditional data science tools</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                    </div>
+                    <h3>Type Safety</h3>
+                    <p>Catch data type errors at compile time, not runtime. Strong typing prevents entire categories of bugs.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                    </div>
+                    <h3>Pipeline Operators</h3>
+                    <p>Chain transformations naturally with <code>|></code>. Data flows through functions in a readable, logical sequence.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                    </div>
+                    <h3>Immutability</h3>
+                    <p>Data transformations without side effects. Safer, more predictable code that's easier to reason about.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"/></svg>
+                    </div>
+                    <h3>Pattern Matching</h3>
+                    <p>Elegant handling of missing data and edge cases. Express complex logic clearly and concisely.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                    </div>
+                    <h3>REPL Support</h3>
+                    <p>Interactive exploration via F# Interactive. Test hypotheses and iterate quickly on analysis.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
+                    </div>
+                    <h3>.NET Ecosystem</h3>
+                    <p>Access to mature libraries and enterprise integration. Leverage the full power of the .NET platform.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pipeline Section -->
+    <section id="pipeline" class="section pipeline">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Data Pipeline</span>
+                <h2>From Raw Data to Insights</h2>
+                <p>A functional approach to data transformation</p>
+            </div>
+            <div class="pipeline-flow">
+                <div class="pipeline-step">
+                    <div class="step-number">01</div>
+                    <div class="step-content">
+                        <h3>Load</h3>
+                        <p>CSV ingestion with Deedle DataFrames</p>
+                        <div class="step-detail">
+                            <code>Frame.ReadCsv("penguins.csv")</code>
+                            <span class="step-output">344 rows × 9 columns</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="pipeline-arrow">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </div>
+                <div class="pipeline-step">
+                    <div class="step-number">02</div>
+                    <div class="step-content">
+                        <h3>Clean</h3>
+                        <p>Handle missing values & validate ranges</p>
+                        <div class="step-detail">
+                            <code>Frame.filterRows |> Frame.mapCols</code>
+                            <span class="step-output">342 valid rows</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="pipeline-arrow">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </div>
+                <div class="pipeline-step">
+                    <div class="step-number">03</div>
+                    <div class="step-content">
+                        <h3>Engineer</h3>
+                        <p>Create derived features</p>
+                        <div class="step-detail">
+                            <code>df?bill_length * df?bill_depth</code>
+                            <span class="step-output">+ bill_area_mm²</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="pipeline-arrow">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </div>
+                <div class="pipeline-step">
+                    <div class="step-number">04</div>
+                    <div class="step-content">
+                        <h3>Visualize</h3>
+                        <p>Interactive Plotly.NET charts</p>
+                        <div class="step-detail">
+                            <code>Chart.Scatter |> Chart.saveHtml</code>
+                            <span class="step-output">4 visualizations</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Visualizations Section -->
+    <section id="visualizations" class="section visualizations">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Results</span>
+                <h2>Interactive Visualizations</h2>
+                <p>Explore the relationships in penguin morphological data</p>
+            </div>
+            <div class="viz-grid">
+                <div class="viz-card">
+                    <div class="viz-header">
+                        <h3>Flipper Length vs Body Mass</h3>
+                        <span class="viz-type">Scatter Plot</span>
+                    </div>
+                    <div class="viz-frame">
+                        <iframe src="plots/flipper_vs_mass.html" loading="lazy"></iframe>
+                    </div>
+                    <p class="viz-description">Strong positive correlation between flipper length and body mass across all penguin species.</p>
+                </div>
+                <div class="viz-card">
+                    <div class="viz-header">
+                        <h3>Bill Length Distribution</h3>
+                        <span class="viz-type">Box Plot</span>
+                    </div>
+                    <div class="viz-frame">
+                        <iframe src="plots/bill_length_boxplot.html" loading="lazy"></iframe>
+                    </div>
+                    <p class="viz-description">Bill length distribution showing median, quartiles, and potential outliers in the dataset.</p>
+                </div>
+                <div class="viz-card">
+                    <div class="viz-header">
+                        <h3>Body Mass Distribution</h3>
+                        <span class="viz-type">Histogram</span>
+                    </div>
+                    <div class="viz-frame">
+                        <iframe src="plots/body_mass_histogram.html" loading="lazy"></iframe>
+                    </div>
+                    <p class="viz-description">Frequency distribution of body mass revealing distinct clusters corresponding to species.</p>
+                </div>
+                <div class="viz-card">
+                    <div class="viz-header">
+                        <h3>Bill Area vs Body Mass</h3>
+                        <span class="viz-type">Scatter Plot</span>
+                    </div>
+                    <div class="viz-frame">
+                        <iframe src="plots/bill_area_vs_mass.html" loading="lazy"></iframe>
+                    </div>
+                    <p class="viz-description">Derived feature (bill area) showing relationship with body mass—a feature engineering example.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Code Section -->
+    <section id="code" class="section code-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Implementation</span>
+                <h2>Code Highlights</h2>
+                <p>Elegant functional patterns in action</p>
+            </div>
+            <div class="code-examples">
+                <div class="code-example">
+                    <div class="code-window large">
+                        <div class="window-header">
+                            <div class="window-dots">
+                                <span></span><span></span><span></span>
+                            </div>
+                            <span class="window-title">DataClean.fs — Missing Value Handling</span>
+                        </div>
+                        <pre class="code-content"><code><span class="keyword">let</span> cleanData (df: Frame&lt;int,string&gt;) =
+    df
+    |> Frame.filterRows (<span class="keyword">fun</span> _ row ->
+        <span class="keyword">let</span> billLength = row.TryGetAs&lt;float&gt;(<span class="string">"bill_length_mm"</span>)
+        <span class="keyword">let</span> billDepth = row.TryGetAs&lt;float&gt;(<span class="string">"bill_depth_mm"</span>)
+        <span class="keyword">let</span> flipperLength = row.TryGetAs&lt;float&gt;(<span class="string">"flipper_length_mm"</span>)
+        <span class="keyword">let</span> bodyMass = row.TryGetAs&lt;float&gt;(<span class="string">"body_mass_g"</span>)
+        
+        <span class="comment">// Keep rows with at least 3 out of 4 measurements</span>
+        <span class="keyword">let</span> validCount = 
+            [billLength.HasValue; billDepth.HasValue; 
+             flipperLength.HasValue; bodyMass.HasValue]
+            |> List.filter id
+            |> List.length
+        validCount >= <span class="number">3</span>
+    )</code></pre>
+                    </div>
+                    <div class="code-annotation">
+                        <h4>Functional Missing Value Handling</h4>
+                        <p>Using <code>TryGetAs&lt;T&gt;</code> with <code>OptionalValue</code> provides compile-time safe handling of potentially missing data. The pipeline operator chains the filtering logic clearly.</p>
+                    </div>
+                </div>
+                <div class="code-example">
+                    <div class="code-window large">
+                        <div class="window-header">
+                            <div class="window-dots">
+                                <span></span><span></span><span></span>
+                            </div>
+                            <span class="window-title">Visualization.fs — Chart Generation</span>
+                        </div>
+                        <pre class="code-content"><code><span class="keyword">let</span> scatterFlipperVsMass (df: Frame&lt;int,string&gt;) =
+    <span class="keyword">let</span> flipperData = df?flipper_length_mm |> Series.values |> Seq.map float
+    <span class="keyword">let</span> massData = df?body_mass_g |> Series.values |> Seq.map float
+    
+    Chart.Scatter(
+        x = flipperData,
+        y = massData,
+        mode = StyleParam.Mode.Markers
+    )
+    |> Chart.withTitle <span class="string">"Flipper Length vs Body Mass"</span>
+    |> Chart.withXAxisStyle <span class="string">"Flipper Length (mm)"</span>
+    |> Chart.withYAxisStyle <span class="string">"Body Mass (g)"</span>
+    |> Chart.saveHtml(<span class="string">"plots/flipper_vs_mass.html"</span>)</code></pre>
+                    </div>
+                    <div class="code-annotation">
+                        <h4>Declarative Visualization</h4>
+                        <p>Plotly.NET enables fluent chart construction. The <code>?</code> operator provides dynamic column access, while pipelines configure and save the chart in one expression.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Stack Section -->
+    <section class="section tech-stack">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Built With</span>
+                <h2>Technology Stack</h2>
+            </div>
+            <div class="tech-grid">
+                <div class="tech-item">
+                    <div class="tech-logo">F#</div>
+                    <span class="tech-name">F# / .NET 9</span>
+                    <span class="tech-desc">Functional-first language</span>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-logo">📊</div>
+                    <span class="tech-name">Deedle 3.0</span>
+                    <span class="tech-desc">Data frames & series</span>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-logo">📈</div>
+                    <span class="tech-name">Plotly.NET</span>
+                    <span class="tech-desc">Interactive visualizations</span>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-logo">🗂️</div>
+                    <span class="tech-name">FSharp.Data</span>
+                    <span class="tech-desc">Type providers</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <span class="brand-icon">λ</span>
+                    <span>F# DataSci</span>
+                </div>
+                <p>Functional programming meets data science</p>
+                <div class="footer-links">
+                    <a href="https://github.com/SiD-array/F-applications" target="_blank">GitHub</a>
+                    <a href="https://github.com/SiD-array" target="_blank">Author</a>
+                    <a href="https://fsharp.org" target="_blank">F# Foundation</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 SiD-array. Open source for educational purposes.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
